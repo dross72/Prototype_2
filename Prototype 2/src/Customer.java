@@ -13,7 +13,7 @@ public class Customer {
     private String phoneNum;
 
     //created a constructor to enter all information at once
-    Customer(String name,String street,String city,String state,String zip,String beerLicNum,String formOfPayment,String loadDockCapa,String deliConstraints,String POC,String phoneNum){
+    public Customer(String name,String street,String city,String state,String zip,String beerLicNum,String formOfPayment,String loadDockCapa,String deliConstraints,String POC,String phoneNum){
         this.name = name;
         this.street = street;
         this.city = city;
@@ -27,6 +27,7 @@ public class Customer {
         this.phoneNum = phoneNum;
     }
 
+    //prints out the customer form according to the sample
     @Override
     public String toString(){
         return "Customer name:"+this.name+"\n" +
@@ -41,6 +42,7 @@ public class Customer {
                 "POC "+this.POC+"\n" +
                 "Phone "+this.phoneNum+"\n";
     }
+
     //gives access to the name field for the customer list
     public String getName() {
         return name;
