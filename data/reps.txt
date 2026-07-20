@@ -1,0 +1,4 @@
+Smithers, John	SMITHERSJ_57842	beer123
+Jefferies, Thomas	JEFFERIEST_1548	beer123
+James, Larry	JAMESL_82312345	beer123
+Maddun, Greg	MADDUNG_5482103	beer123

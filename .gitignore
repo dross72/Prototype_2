@@ -1,0 +1,12 @@
+# build artifacts
+build/
+out/
+*.class
+*.jar
+
+# submitted order output (runtime data)
+orders/
+
+# IDE
+.idea/
+*.iml
