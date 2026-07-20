@@ -5,11 +5,26 @@ component of the distributor ordering system.
 
 ## How to run
 
-Java 17 or newer. From this folder:
+Needs Java 17 or newer (check with java -version, install from adoptium.net if missing).
+
+The one rule for all three options: run it FROM the project folder (the folder
+containing src and data). If the product list comes up empty, the app was
+started from somewhere else and can't find the data folder.
+
+Option 1, the jar:
 
     java -jar RepApp.jar
 
-Run it from the project folder so the app can find the data files.
+Option 2, compile from source (if you pulled the repo, the jar isn't checked in):
+
+    javac -d build src/*.java
+    java -cp build Main
+
+Option 3, IntelliJ:
+1. File > Open and pick this folder
+2. Right click src > Mark Directory as > Sources Root if it isn't already
+3. Open Main.java and hit the run arrow (working directory defaults to the
+   project folder, which is what the app expects)
 
 ## Logins that already exist
 
