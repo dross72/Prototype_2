@@ -20,6 +20,7 @@ public class AppFrame extends JFrame {
     private HomePanel homePanel;
     private OrderBuilderPanel orderPanel;
     private ReviewPanel reviewPanel;
+    private EditCustomerPanel editPanel;
 
     public AppFrame() {
         super("ACME Distributing - Sales Rep");
@@ -30,10 +31,12 @@ public class AppFrame extends JFrame {
         homePanel = new HomePanel(this);
         orderPanel = new OrderBuilderPanel(this);
         reviewPanel = new ReviewPanel(this);
+        editPanel = new EditCustomerPanel(this);
 
         root.add(new LoginPanel(this), "login");
         root.add(homePanel, "home");
         root.add(new CustomerFormPanel(this), "newCustomer");
+        root.add(editPanel, "editCustomer");
         root.add(orderPanel, "order");
         root.add(reviewPanel, "review");
         add(root);
@@ -47,6 +50,7 @@ public class AppFrame extends JFrame {
         if (name.equals("home")) homePanel.refresh();
         if (name.equals("order")) orderPanel.refresh();
         if (name.equals("review")) reviewPanel.refresh();
+        if (name.equals("editCustomer")) editPanel.refresh();
         cards.show(root, name);
     }
 

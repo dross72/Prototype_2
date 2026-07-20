@@ -67,6 +67,49 @@ public class Customer {
         return ownerRepId;
     }
 
+    // getters for the editable fields, used by the edit customer screen
+    public String getStreet() { return street; }
+    public String getCity() { return city; }
+    public String getState() { return state; }
+    public String getZip() { return zip; }
+    public String getBeerLicNum() { return beerLicNum; }
+    public String getFormOfPayment() { return formOfPayment; }
+    public String getLoadDockCapa() { return loadDockCapa; }
+    public String getDeliConstraints() { return deliConstraints; }
+    public String getPOC() { return POC; }
+    public String getPhoneNum() { return phoneNum; }
+
+    // setters for the fields a rep is allowed to change. company name and
+    // form of payment are left out on purpose, those are locked to the
+    // business office
+    public void setStreet(String newStreet){
+        street = newStreet;
+    }
+    public void setCity(String newCity){
+        city = newCity;
+    }
+    public void setState(String newState){
+        state = newState;
+    }
+    public void setZip(String newZip){
+        zip = newZip;
+    }
+    public void setBeerLicNum(String beerLicNum) {
+        this.beerLicNum = beerLicNum;
+    }
+    public void setLoadDockCapa(String loadDockCapa) {
+        this.loadDockCapa = loadDockCapa;
+    }
+    public void setDeliConstraints(String deliConstraints) {
+        this.deliConstraints = deliConstraints;
+    }
+    public void setPOC(String POC) {
+        this.POC = POC;
+    }
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     /**
      * Turns the customer back into one tab separated line so it
      * can be appended to the customers file (our simulated database).

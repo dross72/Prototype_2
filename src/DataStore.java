@@ -123,6 +123,26 @@ public class DataStore {
     }
 
     /**
+     * Rewrites the whole customers file after a customer is edited,
+     * so the changes survive a restart. Returns false if the write fails.
+     */
+    public boolean saveAllCustomers() {
+        File f = findFile("customers.txt");
+        if (f.getParentFile() != null) {
+            f.getParentFile().mkdirs();
+        }
+        try (FileWriter fw = new FileWriter(f, false)) {
+            for (Customer c : company.getCustomers()) {
+                fw.write(c.toFileLine() + System.lineSeparator());
+            }
+            return true;
+        } catch (IOException e) {
+            System.out.println("Could not save customers: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
      * Escapes quotes and backslashes so product names or free text
      * can't break the JSON order file.
      */

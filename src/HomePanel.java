@@ -21,10 +21,12 @@ public class HomePanel extends JPanel {
 
         JButton newOrderBtn = new JButton("Start New Order");
         JButton newCustomerBtn = new JButton("Add New Customer");
+        JButton editCustomerBtn = new JButton("Edit Customer");
         JButton logoutBtn = new JButton("Log Out");
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.LEFT));
         buttons.add(newOrderBtn);
         buttons.add(newCustomerBtn);
+        buttons.add(editCustomerBtn);
         buttons.add(logoutBtn);
 
         JPanel top = new JPanel(new BorderLayout());
@@ -47,6 +49,7 @@ public class HomePanel extends JPanel {
 
         newOrderBtn.addActionListener(e -> app.show("order"));
         newCustomerBtn.addActionListener(e -> app.show("newCustomer"));
+        editCustomerBtn.addActionListener(e -> app.show("editCustomer"));
         logoutBtn.addActionListener(e -> {
             app.setCurrentRepId(null);
             app.show("login");
