@@ -24,7 +24,7 @@ Manager override code (for opening another rep's customer): ACME2026
 
 ## What it does
 
-- Login with username and password (no remember me / forgot password, per client)
+- Login with username and password only, no remember me or forgot password
 - Home screen: start new order, add new customer, my customers, recent order history
 - New customer form matching the client's sample form (name, address, beer
   license, form of payment, loading dock, delivery constraints, POC, phone)

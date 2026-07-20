@@ -1,6 +1,6 @@
 /**
  * One line item on an order. Pack type (case, keg, 4/6 etc.)
- * is part of the item name, not a separate field, per the client.
+ * is baked into the item name instead of being its own field.
  */
 public class Item {
     private String id;

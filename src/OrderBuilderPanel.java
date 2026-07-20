@@ -132,7 +132,7 @@ public class OrderBuilderPanel extends JPanel {
     /**
      * Creates the Order object the first time an item is added, using
      * the header fields at the top of the screen. Opening another rep's
-     * customer requires the manager override code, per the client.
+     * customer asks for the manager override code first.
      */
     private void ensureOrder() {
         if (building != null) return;
@@ -179,8 +179,8 @@ public class OrderBuilderPanel extends JPanel {
 
     /**
      * Resets the screen for a fresh order and reloads the customer
-     * dropdown. All company customers are listed (per the client),
-     * but non owned ones will ask for the override code.
+     * dropdown. Every customer in the company shows up here, but
+     * non owned ones will ask for the override code.
      */
     public void refresh() {
         building = null;

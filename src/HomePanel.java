@@ -2,10 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * The rep's home screen. Built around what a rep actually does when
- * they walk into a store: start a new order fast, get at their own
- * customers, and see their recent orders (history is valuable since
- * reps reuse past orders to build new ones).
+ * The rep's home screen: start a new order, add a customer, see
+ * your own customers and your recent orders. Order history is here
+ * because reps like building new orders off old ones.
  */
 public class HomePanel extends JPanel {
     private AppFrame app;

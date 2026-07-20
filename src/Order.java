@@ -28,7 +28,6 @@ public class Order {
 
     /**
      * Removes a single line item without cancelling the whole order.
-     * This was one of the client's specific requests.
      */
     public void removeItem(int index) {
         if (index >= 0 && index < itemsList.size()) {

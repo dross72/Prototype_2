@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Login screen. Per the client: username and password only,
- * no remember me and no forgot password link.
+ * Login screen. Just username and password, the client didn't
+ * want remember me or a forgot password link.
  */
 public class LoginPanel extends JPanel {
     public LoginPanel(AppFrame app) {
