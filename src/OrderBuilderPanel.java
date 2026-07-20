@@ -31,14 +31,19 @@ public class OrderBuilderPanel extends JPanel {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        // top strip: customer + header fields
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        top.add(new JLabel("Customer:"));
-        top.add(customerBox);
-        top.add(new JLabel("Delivery date:"));
-        top.add(deliveryDate);
-        top.add(new JLabel("Delivery rep ID:"));
-        top.add(deliveryRep);
+        // top strip: customer on the first row, order header fields on
+        // the second so nothing gets pushed off the edge of the window
+        JPanel customerRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        customerRow.add(new JLabel("Customer:"));
+        customerRow.add(customerBox);
+        JPanel headerRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        headerRow.add(new JLabel("Delivery date:"));
+        headerRow.add(deliveryDate);
+        headerRow.add(new JLabel("Delivery rep ID:"));
+        headerRow.add(deliveryRep);
+        JPanel top = new JPanel(new GridLayout(2, 1));
+        top.add(customerRow);
+        top.add(headerRow);
         add(top, BorderLayout.NORTH);
 
         // middle: product search on the left, current order lines on the right
@@ -49,10 +54,15 @@ public class OrderBuilderPanel extends JPanel {
         searchBar.add(searchBtn);
         searchBar.add(new JLabel("Qty:"));
         searchBar.add(qty);
-        searchBar.add(resultCount);
+
+        JPanel searchRows = new JPanel(new GridLayout(2, 1));
+        searchRows.add(searchBar);
+        JPanel countRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        countRow.add(resultCount);
+        searchRows.add(countRow);
 
         JPanel left = new JPanel(new BorderLayout(5, 5));
-        left.add(searchBar, BorderLayout.NORTH);
+        left.add(searchRows, BorderLayout.NORTH);
         left.add(new JScrollPane(results), BorderLayout.CENTER);
         JButton addBtn = new JButton("Add Selected to Order");
         left.add(addBtn, BorderLayout.SOUTH);
