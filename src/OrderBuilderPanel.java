@@ -48,12 +48,12 @@ public class OrderBuilderPanel extends JPanel {
         searchBar.add(searchBtn);
         searchBar.add(new JLabel("Qty:"));
         searchBar.add(qty);
-        JButton addBtn = new JButton("Add to Order");
-        searchBar.add(addBtn);
 
         JPanel left = new JPanel(new BorderLayout(5, 5));
         left.add(searchBar, BorderLayout.NORTH);
         left.add(new JScrollPane(results), BorderLayout.CENTER);
+        JButton addBtn = new JButton("Add Selected to Order");
+        left.add(addBtn, BorderLayout.SOUTH);
 
         JPanel right = new JPanel(new BorderLayout(5, 5));
         right.add(new JLabel("Order lines"), BorderLayout.NORTH);

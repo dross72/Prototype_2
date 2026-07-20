@@ -1,11 +1,11 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import javax.swing.*;
+
+/**
+ * Entry point for the ACME Distributing sales rep prototype.
+ * Sprint 2 - SWE 3313.
+ */
 public class Main {
     public static void main(String[] args) {
-        MasterProductList M = new MasterProductList("Master Product List_110923.xlsx");
-        M.printRepsProductList();
-
-
-
+        SwingUtilities.invokeLater(() -> new AppFrame().setVisible(true));
     }
 }
