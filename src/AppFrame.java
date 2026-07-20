@@ -50,6 +50,14 @@ public class AppFrame extends JFrame {
         cards.show(root, name);
     }
 
+    /**
+     * Returns to the order screen WITHOUT resetting it, so a rep
+     * can come back from the review screen and keep their items.
+     */
+    public void backToOrder() {
+        cards.show(root, "order");
+    }
+
     public DataStore getStore() {
         return store;
     }

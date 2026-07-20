@@ -24,6 +24,7 @@ public class OrderBuilderPanel extends JPanel {
     private JList<String> lines = new JList<>(lineModel);
     private ArrayList<Product> shown = new ArrayList<>();
     private Order building = null;
+    private JLabel resultCount = new JLabel(" ");
 
     public OrderBuilderPanel(AppFrame app) {
         this.app = app;
@@ -48,6 +49,7 @@ public class OrderBuilderPanel extends JPanel {
         searchBar.add(searchBtn);
         searchBar.add(new JLabel("Qty:"));
         searchBar.add(qty);
+        searchBar.add(resultCount);
 
         JPanel left = new JPanel(new BorderLayout(5, 5));
         left.add(searchBar, BorderLayout.NORTH);
@@ -87,6 +89,9 @@ public class OrderBuilderPanel extends JPanel {
             Item item = new Item(p.getProductId(), p.getDescription(), (Integer) qty.getValue());
             building.addItem(item);
             lineModel.addElement(p.getProductId() + "  " + p.getDescription() + "  x" + qty.getValue());
+            // lock the customer once the order has items so it can't
+            // silently switch mid order
+            customerBox.setEnabled(false);
         });
 
         removeBtn.addActionListener(e -> {
@@ -94,6 +99,9 @@ public class OrderBuilderPanel extends JPanel {
             if (idx < 0 || building == null) return;
             building.removeItem(idx);
             lineModel.remove(idx);
+            if (building.getItemsList().isEmpty()) {
+                customerBox.setEnabled(true);
+            }
         });
 
         backBtn.addActionListener(e -> app.show("home"));
@@ -102,6 +110,10 @@ public class OrderBuilderPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Add at least one item before reviewing.");
                 return;
             }
+            // re-read the header fields so edits made after the first
+            // item was added still make it onto the order
+            building.setDeliDate(deliveryDate.getText().isBlank() ? "TBD" : deliveryDate.getText().trim());
+            building.setDeliRepId(deliveryRep.getText().isBlank() ? "TBD" : deliveryRep.getText().trim());
             app.setCurrentOrder(building);
             app.show("review");
         });
@@ -122,7 +134,10 @@ public class OrderBuilderPanel extends JPanel {
         Customer c = customerChoices.get(i);
         if (!c.getOwnerRepId().equals(app.getCurrentRepId())) {
             String code = JOptionPane.showInputDialog(this, "This customer belongs to another rep.\nEnter override code:");
-            if (code == null || !app.getStore().getCompany().checkOverrideCode(code)) {
+            if (code == null) {
+                return; // rep cancelled the dialog
+            }
+            if (!app.getStore().getCompany().checkOverrideCode(code)) {
                 JOptionPane.showMessageDialog(this, "Override code incorrect.");
                 return;
             }
@@ -145,6 +160,11 @@ public class OrderBuilderPanel extends JPanel {
                 if (count >= 200) break; // keep the table snappy
             }
         }
+        int total = 0;
+        for (Product p : app.getStore().getProducts()) {
+            if (q.isEmpty() || p.matches(q)) total++;
+        }
+        resultCount.setText("Showing " + count + " of " + total);
     }
 
     /**
@@ -155,6 +175,7 @@ public class OrderBuilderPanel extends JPanel {
     public void refresh() {
         building = null;
         lineModel.clear();
+        customerBox.setEnabled(true);
         customerBox.removeAllItems();
         customerChoices.clear();
         String rep = app.getCurrentRepId();

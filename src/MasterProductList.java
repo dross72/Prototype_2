@@ -50,13 +50,4 @@ public class MasterProductList {
         return products;
     }
 
-    /**
-     * Prints the fields of the Master Product List that reps are
-     * allowed to view. Handy for debugging from the console.
-     */
-    public void printRepsProductList() {
-        for (Product p : loadProducts()) {
-            System.out.println(p.getProductId() + "\t" + p.getDescription() + "\t" + p.getBrandName() + "\t" + p.getContainerName());
-        }
-    }
 }

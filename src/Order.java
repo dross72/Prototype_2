@@ -56,9 +56,12 @@ public class Order {
         return deliRepId;
     }
 
-    public void displayItems() {
-        for (Item x : itemsList) {
-            System.out.println(x.info());
-        }
+    public void setDeliDate(String deliDate) {
+        this.deliDate = deliDate;
     }
+
+    public void setDeliRepId(String deliRepId) {
+        this.deliRepId = deliRepId;
+    }
+
 }

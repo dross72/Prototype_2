@@ -30,7 +30,7 @@ public class ReviewPanel extends JPanel {
         btns.add(submit);
         add(btns, BorderLayout.SOUTH);
 
-        back.addActionListener(e -> app.show("order"));
+        back.addActionListener(e -> app.backToOrder());
         submit.addActionListener(e -> {
             Order o = app.getCurrentOrder();
             if (o == null) return;

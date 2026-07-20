@@ -67,7 +67,7 @@ public class HomePanel extends JPanel {
             customerModel.addElement(c.getName() + "  (" + c.getAccountId() + ")");
         }
         orderModel.clear();
-        for (String f : app.getStore().getRecentOrderFiles()) {
+        for (String f : app.getStore().getRecentOrderFiles(rep)) {
             orderModel.addElement(f);
         }
         if (orderModel.isEmpty()) orderModel.addElement("(no orders submitted yet)");

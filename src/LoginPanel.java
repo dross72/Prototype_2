@@ -12,6 +12,14 @@ public class LoginPanel extends JPanel {
         gc.insets = new Insets(8, 8, 8, 8);
         gc.fill = GridBagConstraints.HORIZONTAL;
 
+        // client provided logo, scaled down to fit the login card
+        JLabel logo = new JLabel("", SwingConstants.CENTER);
+        java.io.File logoFile = new java.io.File("data/logo.png");
+        if (logoFile.exists()) {
+            ImageIcon icon = new ImageIcon(logoFile.getPath());
+            Image img = icon.getImage().getScaledInstance(220, -1, Image.SCALE_SMOOTH);
+            logo.setIcon(new ImageIcon(img));
+        }
         JLabel title = new JLabel("ACME Distributing", SwingConstants.CENTER);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 28f));
         JLabel sub = new JLabel("Sales Representative Login", SwingConstants.CENTER);
@@ -24,21 +32,23 @@ public class LoginPanel extends JPanel {
         error.setForeground(Color.RED);
 
         gc.gridx = 0; gc.gridy = 0; gc.gridwidth = 2;
-        add(title, gc);
+        add(logo, gc);
         gc.gridy = 1;
+        add(title, gc);
+        gc.gridy = 2;
         add(sub, gc);
         gc.gridwidth = 1;
-        gc.gridy = 2;
+        gc.gridy = 3;
         add(new JLabel("Username:"), gc);
         gc.gridx = 1;
         add(userField, gc);
-        gc.gridx = 0; gc.gridy = 3;
+        gc.gridx = 0; gc.gridy = 4;
         add(new JLabel("Password:"), gc);
         gc.gridx = 1;
         add(passField, gc);
-        gc.gridx = 0; gc.gridy = 4; gc.gridwidth = 2;
+        gc.gridx = 0; gc.gridy = 5; gc.gridwidth = 2;
         add(loginBtn, gc);
-        gc.gridy = 5;
+        gc.gridy = 6;
         add(error, gc);
 
         Runnable doLogin = () -> {

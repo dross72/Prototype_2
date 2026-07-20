@@ -107,13 +107,27 @@ public class DataStore {
      * Saves a brand new customer to the company list and appends it
      * to the customers file so it survives a restart.
      */
-    public void addCustomer(Customer c) {
-        company.addCustomer(c);
-        try (FileWriter fw = new FileWriter(findFile("customers.txt"), true)) {
+    public boolean addCustomer(Customer c) {
+        File f = findFile("customers.txt");
+        if (f.getParentFile() != null) {
+            f.getParentFile().mkdirs();
+        }
+        try (FileWriter fw = new FileWriter(f, true)) {
             fw.write(c.toFileLine() + System.lineSeparator());
+            company.addCustomer(c);
+            return true;
         } catch (IOException e) {
             System.out.println("Could not save customer: " + e.getMessage());
+            return false;
         }
+    }
+
+    /**
+     * Escapes quotes and backslashes so product names or free text
+     * can't break the JSON order file.
+     */
+    private String esc(String s) {
+        return s == null ? "" : s.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     /**
@@ -124,19 +138,19 @@ public class DataStore {
     public String submitOrder(Order order) {
         try {
             Files.createDirectories(Paths.get("orders"));
-            String fileName = "orders/order_" + order.getAccountID() + "_" + System.currentTimeMillis() + ".json";
+            String fileName = "orders/order_" + order.getSalesRepId() + "_" + order.getAccountID() + "_" + System.currentTimeMillis() + ".json";
             StringBuilder sb = new StringBuilder();
             sb.append("{\n");
-            sb.append("  \"accountId\": \"").append(order.getAccountID()).append("\",\n");
-            sb.append("  \"deliveryDate\": \"").append(order.getDeliDate()).append("\",\n");
-            sb.append("  \"salesRepId\": \"").append(order.getSalesRepId()).append("\",\n");
-            sb.append("  \"deliveryRepId\": \"").append(order.getDeliRepId()).append("\",\n");
+            sb.append("  \"accountId\": \"").append(esc(order.getAccountID())).append("\",\n");
+            sb.append("  \"deliveryDate\": \"").append(esc(order.getDeliDate())).append("\",\n");
+            sb.append("  \"salesRepId\": \"").append(esc(order.getSalesRepId())).append("\",\n");
+            sb.append("  \"deliveryRepId\": \"").append(esc(order.getDeliRepId())).append("\",\n");
             sb.append("  \"items\": [\n");
             ArrayList<Item> items = order.getItemsList();
             for (int i = 0; i < items.size(); i++) {
                 Item it = items.get(i);
                 sb.append("    {\"id\": \"").append(it.getId())
-                  .append("\", \"name\": \"").append(it.getItemName())
+                  .append("\", \"name\": \"").append(esc(it.getItemName()))
                   .append("\", \"quantity\": ").append(it.getQuantity()).append("}");
                 sb.append(i < items.size() - 1 ? ",\n" : "\n");
             }
@@ -153,10 +167,10 @@ public class DataStore {
      * Lists the file names of previously submitted orders, newest first,
      * so the home screen can show the rep their recent order history.
      */
-    public ArrayList<String> getRecentOrderFiles() {
+    public ArrayList<String> getRecentOrderFiles(String repId) {
         ArrayList<String> names = new ArrayList<>();
         File dir = new File("orders");
-        File[] files = dir.listFiles((d, n) -> n.endsWith(".json"));
+        File[] files = dir.listFiles((d, n) -> n.endsWith(".json") && n.contains(repId));
         if (files != null) {
             java.util.Arrays.sort(files, (a, b) -> Long.compare(b.lastModified(), a.lastModified()));
             for (File f : files) names.add(f.getName());

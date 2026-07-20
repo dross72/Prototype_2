@@ -10,13 +10,9 @@ public class Company {
     private static ArrayList<Customer> customers = new ArrayList<>();
     private static String overrideCode = "ACME2026";
 
-    public void printCustomerList() {
-        for (Customer x : customers) {
-            System.out.println(x.getName());
-        }
-    }
-
-    //adds new customers to the company's customer list
+    /**
+     * Adds a new customer to the company's shared customer list.
+     */
     public void addCustomer(Customer newCustomer) {
         customers.add(newCustomer);
     }
@@ -25,7 +21,9 @@ public class Company {
         return customers;
     }
 
-    //Check to see if a Rep's override code is correct
+    /**
+     * Checks whether a rep's override code attempt is correct.
+     */
     public Boolean checkOverrideCode(String overrideAttempt) {
         if (overrideAttempt.equals(overrideCode)) {
             return true;

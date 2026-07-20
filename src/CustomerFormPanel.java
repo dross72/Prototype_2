@@ -54,6 +54,7 @@ public class CustomerFormPanel extends JPanel {
         add(status, gc);
 
         back.addActionListener(e -> app.show("home"));
+        // tabs and newlines would corrupt the tab separated customers file
         save.addActionListener(e -> {
             if (name.getText().isBlank() || street.getText().isBlank() || license.getText().isBlank()) {
                 status.setForeground(Color.RED);
@@ -68,16 +69,28 @@ public class CustomerFormPanel extends JPanel {
             String digits = String.valueOf(System.currentTimeMillis());
             String acct = prefix + "_" + digits.substring(digits.length() - 9);
 
-            Customer c = new Customer(name.getText().trim(), street.getText().trim(), city.getText().trim(),
-                    state.getText().trim(), zip.getText().trim(), license.getText().trim(),
-                    (String) payment.getSelectedItem(), dock.getText().trim(), constraints.getText().trim(),
-                    poc.getText().trim(), phone.getText().trim(), acct, app.getCurrentRepId());
-            app.getStore().addCustomer(c);
-            status.setForeground(new Color(0, 128, 0));
-            status.setText("Saved. Account ID: " + acct);
-            for (Component f : fields) {
-                if (f instanceof JTextField) ((JTextField) f).setText("");
+            Customer c = new Customer(clean(name.getText()), clean(street.getText()), clean(city.getText()),
+                    clean(state.getText()), clean(zip.getText()), clean(license.getText()),
+                    (String) payment.getSelectedItem(), clean(dock.getText()), clean(constraints.getText()),
+                    clean(poc.getText()), clean(phone.getText()), acct, app.getCurrentRepId());
+            if (app.getStore().addCustomer(c)) {
+                status.setForeground(new Color(0, 128, 0));
+                status.setText("Saved. Account ID: " + acct);
+                for (Component f : fields) {
+                    if (f instanceof JTextField) ((JTextField) f).setText("");
+                }
+            } else {
+                status.setForeground(Color.RED);
+                status.setText("Could not save the customer file. Check the data folder.");
             }
         });
+    }
+
+    /**
+     * Strips tabs and newlines that would corrupt the tab separated
+     * customers file.
+     */
+    private String clean(String s) {
+        return s.replace('\t', ' ').replace('\n', ' ').replace('\r', ' ').trim();
     }
 }
